@@ -3,17 +3,21 @@ import multiParty from 'multiparty';
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import fs from 'fs';
 import mime from 'mime-types';
+import { mongo } from 'mongoose';
 const bucketName = `khanhdang-next-ecommerce`;
 
-export default async function handle(req,res) {
+export default async function handle(req, res) {
+    await mongooseConnect();
+    //await isAdminRequest(req, res);
+
     const form = new multiParty.Form();
-    const {files} = await new Promise((resolve,reject) => {
+    const { files } = await new Promise((resolve, reject) => {
         form.parse(req, async (err, fields, files) => {
             if (err) return reject(err)
-            resolve({fields, files});
+            resolve({ fields, files });
         });
-    });   
-    console.log('length:',files.file.length);
+    });
+    console.log('length:', files.file.length);
     const client = new S3Client({
         region: 'us-east-1',
         credentials: {
@@ -22,7 +26,7 @@ export default async function handle(req,res) {
         },
     });
     const links = [];
-    for(const file of files.file){
+    for (const file of files.file) {
         const ext = file.originalFilename.split('.').pop();
         const newFilename = Date.now() + '.' + ext;
         await client.send(new PutObjectCommand({
@@ -36,9 +40,9 @@ export default async function handle(req,res) {
         const link = `https://${bucketName}.s3.amazonaws.com/${newFilename}`;
         links.push(link);
     }
-    res.json({links});
+    res.json({ links });
 }
 
 export const config = {
-    api: {bodyParser: false},
+    api: { bodyParser: false },
 };
