@@ -4,9 +4,9 @@ import Layout from "@/components/Layout";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-function Categories(swal)
+function Categories({swal})
 {
-  const [editedCategory, setEditedCategory] = useState(null);
+const [editedCategory, setEditedCategory] = useState(null);
 const [name,setName] = useState('');
 const [parentCategory,setParentCategory] = useState('');
 const [categories,setCategories] = useState([]);
