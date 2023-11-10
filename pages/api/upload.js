@@ -3,7 +3,7 @@ import multiParty from 'multiparty';
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import fs from 'fs';
 import mime from 'mime-types';
-import { mongo } from 'mongoose';
+import { mongooseConnect } from "@/lib/mongoose";
 const bucketName = `khanhdang-next-ecommerce`;
 
 export default async function handle(req, res) {
