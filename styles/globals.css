@@ -55,7 +55,7 @@ table.basic thead tr td{
   @apply text-sm text-gray-600 font-bold uppercase border-b border-gray-200 px-4 py-2;
 }
 table.basic tr td{
-  @apply px-4 py-1;
+  @apply px-4 py-1 text-black;
 }
 table.basic a{
   @apply px-4 py-1 text-sm rounded-2xl items-center inline-flex gap-1 mx-1 ;
