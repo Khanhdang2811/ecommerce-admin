@@ -3,7 +3,7 @@ import axios from "axios";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 
-export default function products() {
+export default function Products() {
     const [products, setProducts] = useState([]);
     useEffect(() => {
         axios.get('/api/products').then(response => {
