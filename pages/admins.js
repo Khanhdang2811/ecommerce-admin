@@ -1,17 +1,17 @@
 import Layout from "@/components/Layout";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import {withSwal} from "react-sweetalert2";
+import { withSwal } from "react-sweetalert2";
 import Spinner from "@/components/Spinner";
-import {prettyDate} from "@/lib/date";
+import { prettyDate } from "@/lib/date";
 
-function AdminsPage({swal}) {
-  const [email,setEmail] = useState('');
-  const [adminEmails,setAdminEmails] = useState([]);
-  const [isLoading,setIsLoading] = useState(false);
-  function addAdmin(ev){
+function AdminsPage({ swal }) {
+  const [email, setEmail] = useState('');
+  const [adminEmails, setAdminEmails] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  function addAdmin(ev) {
     ev.preventDefault();
-    axios.post('/api/admins', {email}).then(res => {
+    axios.post('/api/admins', { email }).then(res => {
       console.log(res.data);
       swal.fire({
         title: 'Admin created!',
@@ -38,7 +38,7 @@ function AdminsPage({swal}) {
       reverseButtons: true,
     }).then(async result => {
       if (result.isConfirmed) {
-        axios.delete('/api/admins?_id='+_id).then(() => {
+        axios.delete('/api/admins?_id=' + _id).then(() => {
           swal.fire({
             title: 'Admin deleted!',
             icon: 'success',
@@ -61,7 +61,7 @@ function AdminsPage({swal}) {
   return (
     <Layout>
       <h1>Admins</h1>
-      <h2>Add new admin</h2>
+      <h2>Thêm admin mới</h2>
       <form onSubmit={addAdmin}>
         <div className="flex gap-2">
           <input
@@ -69,20 +69,20 @@ function AdminsPage({swal}) {
             className="mb-0"
             value={email}
             onChange={ev => setEmail(ev.target.value)}
-            placeholder="google email"/>
+            placeholder="google email" />
           <button
             type="submit"
             className="btn-primary py-1 whitespace-nowrap">
-            Add admin
+            Thêm admin
           </button>
         </div>
       </form>
 
-      <h2>Existing admins</h2>
+      <h2>Các admin đã có</h2>
       <table className="basic">
         <thead>
           <tr>
-            <th className="text-left">Admin google email</th>
+            <th className="text-left">Admin Google Email</th>
             <th></th>
             <th></th>
           </tr>
@@ -105,7 +105,7 @@ function AdminsPage({swal}) {
               </td>
               <td>
                 <button
-                  onClick={() => deleteAdmin(adminEmail._id, adminEmail.email)} className="btn-red">Delete</button>
+                  onClick={() => deleteAdmin(adminEmail._id, adminEmail.email)} className="btn-red">Xóa</button>
               </td>
             </tr>
           ))}
@@ -115,6 +115,6 @@ function AdminsPage({swal}) {
   );
 }
 
-export default withSwal(({swal}) => (
+export default withSwal(({ swal }) => (
   <AdminsPage swal={swal} />
 ));

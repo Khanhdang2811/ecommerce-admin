@@ -41,38 +41,38 @@ export default function HomeStats() {
 
   return (
     <div>
-      <h1>Orders</h1>
+      <h1>Đơn hàng</h1>
       <div className="tiles-grid">
         <div className="tile">
-          <h3 className="tile-header">Today</h3>
+          <h3 className="tile-header">Hôm nay</h3>
           <div className="tile-number">{ordersToday.length}</div>
           <div className="tile-desc">{ordersToday.length} orders today</div>
         </div>
         <div className="tile">
-          <h3 className="tile-header">This week</h3>
+          <h3 className="tile-header">Trong tuần</h3>
           <div className="tile-number">{ordersWeek.length}</div>
           <div className="tile-desc">{ordersWeek.length} orders this week</div>
         </div>
         <div className="tile">
-          <h3 className="tile-header">This month</h3>
+          <h3 className="tile-header">Trong tháng</h3>
           <div className="tile-number">{ordersMonth.length}</div>
           <div className="tile-desc">{ordersMonth.length} orders this month</div>
         </div>
       </div>
-      <h1>Revenue</h1>
+      <h1>Doanh thu</h1>
       <div className="tiles-grid">
         <div className="tile">
-          <h3 className="tile-header">Today</h3>
+          <h3 className="tile-header">Hôm nay</h3>
           <div className="tile-number">$ {ordersTotal(ordersToday)}</div>
           <div className="tile-desc">{ordersToday.length} orders today</div>
         </div>
         <div className="tile">
-          <h3 className="tile-header">This week</h3>
+          <h3 className="tile-header">Trogn tuần</h3>
           <div className="tile-number">$ {ordersTotal(ordersWeek)}</div>
           <div className="tile-desc">{ordersWeek.length} orders this week</div>
         </div>
         <div className="tile">
-          <h3 className="tile-header">This month</h3>
+          <h3 className="tile-header">Trong tháng</h3>
           <div className="tile-number">$ {ordersTotal(ordersMonth)}</div>
           <div className="tile-desc">{ordersMonth.length} orders this month</div>
         </div>
