@@ -1,7 +1,8 @@
-import {BounceLoader} from "react-spinners";
+import { PulseLoader } from "react-spinners";
+
 
 export default function Spinner() {
   return (
-    <BounceLoader color={'#1E3A8A'} speedMultiplier={2} />
+    <PulseLoader color={'#1E3A8A'} speedMultiplier={2} />
   );
 }
