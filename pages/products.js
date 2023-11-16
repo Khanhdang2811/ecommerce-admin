@@ -7,6 +7,7 @@ import Spinner from "@/components/Spinner";
 export default function Products() {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  let stt = 1;
   useEffect(() => {
     setIsLoading(true);
     axios.get('/api/products').then(response => {
@@ -20,8 +21,9 @@ export default function Products() {
       <table className="basic mt-2">
         <thead>
           <tr>
+            <td>STT</td>
             <td>Tên sản phẩm</td>
-            <td></td>
+            <td colSpan={2}></td>
           </tr>
         </thead>
         <tbody>
@@ -36,6 +38,7 @@ export default function Products() {
           )}
           {products.map(product => (
             <tr key={product._id}>
+              <td>{stt++}</td>
               <td>{product.title}</td>
               <td>
                 <Link className="btn-default" href={'/products/edit/' + product._id}>
@@ -55,6 +58,6 @@ export default function Products() {
           ))}
         </tbody>
       </table>
-    </Layout>
+    </Layout >
   );
 }

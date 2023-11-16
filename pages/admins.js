@@ -9,6 +9,7 @@ function AdminsPage({ swal }) {
   const [email, setEmail] = useState('');
   const [adminEmails, setAdminEmails] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  let stt = 1;
   function addAdmin(ev) {
     ev.preventDefault();
     axios.post('/api/admins', { email }).then(res => {
@@ -82,6 +83,7 @@ function AdminsPage({ swal }) {
       <table className="basic">
         <thead>
           <tr>
+            <th className="text-left">STT</th>
             <th className="text-left">Admin Google Email</th>
             <th></th>
             <th></th>
@@ -99,6 +101,7 @@ function AdminsPage({ swal }) {
           )}
           {adminEmails.length > 0 && adminEmails.map(adminEmail => (
             <tr>
+              <td>{stt++}</td>
               <td>{adminEmail.email}</td>
               <td>
                 {adminEmail.createdAt && prettyDate(adminEmail.createdAt)}
