@@ -7,6 +7,13 @@ import Spinner from "@/components/Spinner";
 export default function Products() {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [filterName, setFilterName] = useState('');
+  const [showFilter, setShowFilter] = useState(false);
+  const productNames = products.map(p => p.title);
+
+  const filteredProducts = products.filter(p => {
+    return filterName === '' || p.title === filterName;
+  });
   let stt = 1;
   useEffect(() => {
     setIsLoading(true);
@@ -17,6 +24,28 @@ export default function Products() {
   }, []);
   return (
     <Layout>
+      <button
+        className="btn-primary mb-1 mr-1"
+        onClick={() => setShowFilter(true)}>
+        Lọc
+      </button>
+      {showFilter && (
+        <form className="inline-flex ml-1 mr-1">
+          <select
+            value={filterName}
+            onChange={(e) => setFilterName(e.target.value)}
+          >
+            <option
+              value="">Tất cả</option>
+            {productNames.map(name => (
+              <option
+                key={name}
+                value={name}
+              >{name}</option>
+            ))}
+          </select>
+        </form>
+      )}
       <Link className="btn-primary" href={'/products/new'}>Thêm sản phẩm mới</Link>
       <table className="basic mt-2">
         <thead>
@@ -36,7 +65,7 @@ export default function Products() {
               </td>
             </tr>
           )}
-          {products.map(product => (
+          {filteredProducts.map(product => (
             <tr key={product._id}>
               <td>{stt++}</td>
               <td>{product.title}</td>
@@ -58,6 +87,6 @@ export default function Products() {
           ))}
         </tbody>
       </table>
-    </Layout >
+    </Layout>
   );
 }

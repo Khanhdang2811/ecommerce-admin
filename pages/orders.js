@@ -2,11 +2,37 @@ import Layout from "@/components/Layout";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Spinner from "@/components/Spinner";
+import { subHours } from "date-fns";
 
 export default function OrdersPage() {
   const [orders, setOrders] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [filterDate, setFilterDate] = useState('');
+  const [showFilter, setShowFilter] = useState(false);
+
+  const filterOrdersByDate = (dateFilter) => {
+    const currentDate = new Date();
+    const filteredOrders = orders.filter(order => {
+      const orderDate = new Date(order.createdAt);
+      if (dateFilter === 'today') {
+        return orderDate > subHours(currentDate, 24);
+      } else if (dateFilter === 'thisWeek') {
+        return orderDate > subHours(currentDate, 24 * 7);
+      } else if (dateFilter === 'thisMonth') {
+        return orderDate > subHours(currentDate, 24 * 30);
+      }
+      return true; // No date filter, return all orders
+    });
+    return filteredOrders;
+  };
+
+  const filteredOrders = filterOrdersByDate(filterDate);
+
   let stt = 1;
+
+  const handleFilterClick = () => {
+    setShowFilter(!showFilter);
+  };
   useEffect(() => {
     setIsLoading(true);
     axios.get('/api/orders').then(response => {
@@ -17,6 +43,24 @@ export default function OrdersPage() {
   return (
     <Layout>
       <h1>Đơn hàng</h1>
+      <button
+        className="btn-primary mb-1 mr-1"
+        onClick={handleFilterClick}>
+        Lọc
+      </button>
+      {showFilter && (
+        <form className="inline-flex ml-1 mr-1">
+          <select
+            value={filterDate}
+            onChange={(e) => setFilterDate(e.target.value)}
+          >
+            <option value="">Tất cả</option>
+            <option value="today">Hôm nay</option>
+            <option value="thisWeek">Tuần này</option>
+            <option value="thisMonth">Tháng này</option>
+          </select>
+        </form>
+      )}
       <table className="basic">
         <thead>
           <tr>
@@ -37,7 +81,7 @@ export default function OrdersPage() {
               </td>
             </tr>
           )}
-          {orders.length > 0 && orders.map(order => (
+          {filteredOrders.length > 0 && filteredOrders.map(order => (
             <tr>
               <td>{stt++}</td>
               <td>{(new Date(order.createdAt)).toLocaleString()}
